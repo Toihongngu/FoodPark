@@ -15,4 +15,8 @@ class Category extends Model
         'status',
         'show_at_home'
     ];
+    function product(){
+        return $this->hasMany(Product::class);
+    }
+
 }

@@ -43,14 +43,14 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">Stisla</a>
+            <a href="{{url('/')}}">Admin</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">St</a>
+            <a href="{{url('/')}}">St</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
-            <li class="active"><a class="nav-link" href="index-0.html"><i class="fas fa-fire"></i><span>General
+            <li class="active"><a class="nav-link" href="{{route('admin.dashboard')}}"><i class="fas fa-fire"></i><span>General
                         Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>

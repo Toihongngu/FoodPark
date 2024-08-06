@@ -21,11 +21,16 @@
 
     <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
 <body>
-
+    <div class="overlay-container">
+        <div class="overlay">
+            <span class="loader"></span>
+        </div>
+    </div>
     <!--=============================
         TOPBAR START
     ==============================-->
@@ -137,12 +142,18 @@
             $.ajax({
                 method: 'GET',
                 url: '{{ route('load-product-modal', ':productId') }}'.replace(':productId', productId),
+                beforeSend: function() {
+                    $('.overlay').addClass('active');
+                },
                 success: function(response) {
-$(".load_product_modal_body").html(response);
-$('#cartModal').modal('show');
+                    $(".load_product_modal_body").html(response);
+                    $('#cartModal').modal('show');
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
+                },
+                complete: function() {
+                    $('.overlay').removeClass('active');
                 }
             })
         }

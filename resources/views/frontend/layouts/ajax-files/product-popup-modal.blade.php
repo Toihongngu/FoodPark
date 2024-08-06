@@ -64,9 +64,9 @@
             <h5>select quentity</h5>
             <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
                 <div class="quentity_btn">
-                    <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                    <input type="text" placeholder="1">
-                    <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                    <button class="btn btn-danger decrement"><i class="fal fa-minus"></i></button>
+                    <input type="text" id="quantity" value="1" placeholder="1" readonly>
+                    <button class="btn btn-success increment"><i class="fal fa-plus"></i></button>
                 </div>
                 @if ($product->offer_price > 0)
                     <h3 id="total_price">{{ currencyPosition($product->offer_price) }}</h3>
@@ -77,7 +77,7 @@
             </div>
         </div>
         <ul class="details_button_area d-flex flex-wrap">
-            <li><a class="common_btn" href="#">add to cart</a></li>
+            <li><button id="submitBtn" disabled type="submit" class="common_btn" href="#">add to cart</button></li>
         </ul>
     </div>
 </form>
@@ -85,6 +85,19 @@
 
 <script>
     $(document).ready(function() {
+        // Ban đầu vô hiệu hóa nút submit
+        $('#submitBtn').prop('disabled', true);
+
+        // Sự kiện khi chọn radio button
+        $('input[name="product_size"]').on('change', function() {
+            // Nếu có bất kỳ nút radio nào được chọn
+            if ($('input[name="product_size"]:checked').length > 0) {
+                $('#submitBtn').prop('disabled', false); // Kích hoạt nút submit
+            } else {
+                $('#submitBtn').prop('disabled', true); // Vô hiệu hóa nút submit
+            }
+        });
+
         $('input[name="product_size"]').on('change', function() {
             updateTotalPrice();
         })
@@ -92,10 +105,32 @@
             updateTotalPrice();
         })
 
+        $('.increment').on('click', function(e) {
+            e.preventDefault()
+            let quantity = $('#quantity');
+            let currentQuantity = parseFloat(quantity.val());
+            quantity.val(currentQuantity + 1);
+            updateTotalPrice();
+        })
+
+        $('.decrement').on('click', function(e) {
+            e.preventDefault()
+            let quantity = $('#quantity');
+            let currentQuantity = parseFloat(quantity.val());
+
+            if (currentQuantity > 1) {
+                quantity.val(currentQuantity - 1);
+                updateTotalPrice();
+            }
+
+        })
+
+
         function updateTotalPrice() {
             let basePrice = parseFloat($('input[name="base_price"]').val());
             let selectedSizePrice = 0;
             let selectedOptionsPrice = 0;
+            let quantity = parseFloat($('#quantity').val());
 
             let selectedSize = $('input[name="product_size"]:checked');
             if (selectedSize.length > 0) {
@@ -109,7 +144,7 @@
             })
 
 
-            let totalPrice = basePrice + selectedOptionsPrice + selectedSizePrice;
+            let totalPrice = (basePrice + selectedOptionsPrice + selectedSizePrice) * quantity;
 
             $('#total_price').text("{{ config('settings.site_currency_icon') }}" + totalPrice);
         }

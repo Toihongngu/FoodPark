@@ -20,8 +20,7 @@ class UserController extends Controller
         if ($request->has('search')) {
             $search = $request->input('search');
             $user->where('name', 'like', "%{$search}%")
-                ->orWhere('price', 'like', "%{$search}%")
-                ->orWhere('offer_price', 'like', "%{$search}%");
+                ->orWhere('email', 'like', "%{$search}%");
         }
 
         $users = $user->paginate(10)->appends(['search' => $request->input('search')]);
