@@ -80,7 +80,7 @@
                             <label>Show At Home</label>
                             <select name="show_at_home" class="form-control">
                                 <option @selected($product->show_at_home === 1) value="1">Yes</option>
-                                <option @selected($product->show_at_home === 0) selected value="0">No</option>
+                                <option @selected($product->show_at_home === 0) value="0">No</option>
                             </select>
                         </div>
                         <div class="form-group col-6">

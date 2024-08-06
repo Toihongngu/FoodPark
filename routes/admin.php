@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductSizeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WhyChooseUsController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
     //product category
     Route::resource('category', CategoryControler::class);
+
+    //user
+    Route::get('user', [UserController::class, 'index'])->name('user.index');
+    Route::get('user/role/{user}', [UserController::class, 'updateRole'])->name('user.update-role');
+    Route::get('user/status/{user}', [UserController::class, 'updateStatus'])->name('user.update-status');
+    Route::delete('user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+
 
     //product
     Route::resource('product', ProductController::class);

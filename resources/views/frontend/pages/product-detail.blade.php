@@ -76,7 +76,7 @@
                                 @foreach ($product->productSizes as $size)
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                            id="size-{{ $size->id }}" checked>
+                                            id="size-{{ $size->id }}">
                                         <label class="form-check-label" for="size-{{ $size->id }}">
                                             {{ $size->name }} <span>+  {{currencyPosition($size->price)}}</span>
                                         </label>

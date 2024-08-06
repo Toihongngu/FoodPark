@@ -54,7 +54,8 @@
                         Dashboard</span></a>
             </li>
             <li class="menu-header">Starter</li>
-
+            <li class="active"><a class="nav-link" href="{{ route('admin.user.index') }}"><i
+                        class="far fa-square"></i> <span>Users</span></a></li>
             <li class="active"><a class="nav-link" href="{{ route('admin.slider.index') }}"><i
                         class="far fa-square"></i> <span>Slider</span></a></li>
             <li class="active"><a class="nav-link" href="{{ route('admin.why-choose-us.index') }}"><i
@@ -69,7 +70,7 @@
                 </ul>
             </li>
             <li class="active"><a class="nav-link" href="{{ route('admin.setting.index') }}"><i
-                class="far fa-square"></i> <span>Setting</span></a></li>
+                        class="far fa-square"></i> <span>Setting</span></a></li>
         </ul>
     </aside>
 </div>
