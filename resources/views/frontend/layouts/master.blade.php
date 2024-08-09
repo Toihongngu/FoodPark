@@ -26,7 +26,7 @@
 </head>
 
 <body>
-    <div class="overlay-container">
+    <div class="overlay-container d-none">
         <div class="overlay">
             <span class="loader"></span>
         </div>
@@ -143,6 +143,7 @@
                 method: 'GET',
                 url: '{{ route('load-product-modal', ':productId') }}'.replace(':productId', productId),
                 beforeSend: function() {
+                    $('.overlay-container').removeClass('d-none');
                     $('.overlay').addClass('active');
                 },
                 success: function(response) {
@@ -154,6 +155,7 @@
                 },
                 complete: function() {
                     $('.overlay').removeClass('active');
+                    $('.overlay-container').addClass('d-none');
                 }
             })
         }

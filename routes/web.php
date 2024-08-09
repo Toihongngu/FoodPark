@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\DashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -17,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-//home
-Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 
 Route::group(['middleware' => 'guest'],function () {
@@ -40,14 +39,26 @@ Route::group(['middleware' => ['auth','status:true']], function () {
 
 
 require __DIR__ . '/auth.php';
+//home
+Route::get('/', [FrontendController::class, 'index'])->name('home');
 
 // product detail
 Route::get('/product/{slug}', [FrontendController::class, 'detailProduct'])->name('product.detail');
 
-
-
 // product model route
 Route::get('/load-product-modal/{productId}', [FrontendController::class, 'loadProductModal'])->name('load-product-modal');
+
+//add to cart
+Route::post('add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+
+
+
+
+
+
+
+
+
 
 
 
