@@ -16,7 +16,7 @@ class CartController extends Controller
     {
         try {
             $product = Product::with(['productSizes', 'productOptions'])->findOrFail($request->product_id);
-            $productSize = $product->productSizes->where('id', $request->product_size)->firstOrFail();
+            $productSize = $product->productSizes->where('id', $request->product_size)->first();
             $productOption = $product->productOptions->whereIn('id', $request->product_option);
             $options = [
                 'product_size' => [],
@@ -27,7 +27,7 @@ class CartController extends Controller
                 ]
             ];
             if ($productSize !== null) {
-                $options['product_size'][] = [
+                $options['product_size'] = [
                     'id' => $productSize?->id,
                     'name' => $productSize?->name,
                     'price' => $productSize?->price
@@ -54,6 +54,25 @@ class CartController extends Controller
             return response(['status' => 'success', 'message' => 'Product Add In To Cart '], 200);
         } catch (\Exception $e) {
             return response(['status' => 'error', 'message' => 'Product Add In To Cart ERROR '], 500);
+        }
+    }
+
+    public function getCartProduct()
+    {
+
+        return view('frontend.layouts.ajax-files.sidebar-cart-item')->render();
+    }
+
+
+    public function cartProductRemove($rowId)
+    {
+
+
+        try {
+            Cart::remove($rowId);
+            return response(['status' => 'success', 'message' => 'Remove Product In To Cart Successfully'], 200);
+        } catch (\Exception $e) {
+            return response(['status' => 'error', 'message' => 'Remove Product In To Cart ERROR '], 500);
         }
     }
 }

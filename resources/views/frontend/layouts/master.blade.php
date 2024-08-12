@@ -31,6 +31,7 @@
             <span class="loader"></span>
         </div>
     </div>
+
     <!--=============================
         TOPBAR START
     ==============================-->
@@ -157,6 +158,61 @@
                     $('.overlay').removeClass('active');
                     $('.overlay-container').addClass('d-none');
                 }
+            })
+        }
+    </script>
+    <script>
+        function updateProductModal(callBack = null) {
+            $.ajax({
+                method: 'GET',
+                url: '{{ route('get-cart-products') }}',
+                beforeSend: function() {
+
+                },
+                success: function(response) {
+                    $(".cart_contents").html(response);
+                    let cartTotal = $("#cart_total").val();
+                    let cartCount = $("#cart_product_count").val();
+
+                    $(".cart_subtotal").text("{{ currencyPosition(':cartTotal') }}".replace(':cartTotal',
+                        cartTotal));
+                    $(".cart_count").text(cartCount);
+                    if (callBack && typeof callBack === 'function') {
+                        callBack();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                },
+                complete: function() {
+
+                }
+            })
+        }
+    </script>
+    <script>
+        function removeProductFormSidebar($rowId) {
+            $.ajax({
+                method: 'GET',
+                url: '{{ route("cart-product-remove", ":rowId") }}'.replace(":rowId", $rowId),
+                beforeSend: function() {
+                    $('.overlay-container').removeClass('d-none');
+                    $('.overlay').addClass('active');
+                },
+                success: function(response) {
+                    updateProductModal(function() {
+                        toastr.success(response.message);
+                        $('.overlay').removeClass('active');
+                        $('.overlay-container').addClass('d-none');
+                    });
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    $('.overlay').removeClass('active');
+                    $('.overlay-container').addClass('d-none');
+                }
+
             })
         }
     </script>

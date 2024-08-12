@@ -158,20 +158,21 @@
                 url: '{{ route('add-to-cart') }}',
                 data: formData,
                 beforeSend: function() {
-                    $(".modal_cart_button").attr('disabled',true)
+                    $(".modal_cart_button").attr('disabled', true)
                     $(".modal_cart_button").html(
                         '<span class="spinner-border spinner-border-sm text-light" role="status" aria-hidden="true"></span><span class="visually-hidden"> Loading...</span>'
-                        )
+                    )
                 },
                 success: function(response) {
+                    updateProductModal();
                     toastr.success(response.message);
                 },
                 error: function(xhr, status, error) {
                     toastr.error(xhr.responseJSON.message);
                 },
-                completed: function(){
+                complete: function() {
                     $(".modal_cart_button").html('Add To Cart')
-                    $(".modal_cart_button").attr('disabled',false)
+                    $(".modal_cart_button").attr('disabled', false)
                 }
             })
         })
